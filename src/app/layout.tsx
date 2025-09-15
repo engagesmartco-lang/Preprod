@@ -19,6 +19,9 @@ export const metadata: Metadata = {
   authors: [{ name: "EngageSmart" }],
   creator: "EngageSmart",
   publisher: "EngageSmart",
+  verification: {
+    google: "88uck1FqCywauLEmPje5t0Fsjug42oLNsSmQWM2CeW8",
+  },
   robots: {
     index: true,
     follow: true,
