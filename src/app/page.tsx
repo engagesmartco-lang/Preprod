@@ -178,12 +178,6 @@ export default function Home() {
                 >
                   How It Works
                 </button>
-                <button 
-                  onClick={() => scrollToSection('waitlist')}
-                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm"
-                >
-                  Join Waitlist
-                </button>
               </div>
               <div className="flex items-center space-x-4 ml-8">
                 <button className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm">
@@ -232,12 +226,6 @@ export default function Home() {
                     className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 text-left"
                   >
                     How It Works
-                  </button>
-                  <button 
-                    onClick={() => scrollToSection('waitlist')}
-                    className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 text-left"
-                  >
-                    Join Waitlist
                   </button>
                   <div className="pt-4 border-t border-gray-200">
                     <button className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 block w-full text-left">
