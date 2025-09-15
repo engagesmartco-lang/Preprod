@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useState, useRef, useEffect } from 'react';
 import { useWaitlist } from '@/hooks/useWaitlist';
 import { 
@@ -20,12 +20,10 @@ import {
   Award,
   Globe,
   Clock,
-  Play,
   Menu,
   X,
   ShoppingCart,
   AlertTriangle,
-  UserCheck,
   Megaphone,
   TrendingDown,
   Repeat,
@@ -64,16 +62,16 @@ function AnimatedCounter({ target, duration }: { target: number; duration: numbe
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
+  // const { scrollYProgress } = useScroll({
+  //   target: containerRef,
+  //   offset: ["start start", "end start"]
+  // });
 
   const { email, setEmail, isLoading, isSuccess, error, submitWaitlist, reset } = useWaitlist();
 
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
+  // const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
+  // const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  // const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
 
   return (
     <>
@@ -86,7 +84,7 @@ export default function Home() {
             "@type": "SoftwareApplication",
             "name": "EngageSmart",
             "description": "AI-powered customer retention platform that helps businesses predict churn, engage customers, and drive growth by turning first-time buyers into loyal customers.",
-            "url": "https://engagesmart.com",
+            "url": process.env.NEXT_PUBLIC_APP_URL || "https://engagesmart.com",
             "applicationCategory": "BusinessApplication",
             "operatingSystem": "Web",
             "offers": {
@@ -105,7 +103,7 @@ export default function Home() {
             "provider": {
               "@type": "Organization",
               "name": "EngageSmart",
-              "url": "https://engagesmart.com"
+              "url": process.env.NEXT_PUBLIC_APP_URL || "https://engagesmart.com"
             }
           })
         }}
@@ -455,7 +453,7 @@ export default function Home() {
                               transition={{ duration: 0.8, delay: 4.0 }}
                               className="text-sm text-gray-800"
                             >
-                              Lisa, new arrivals you'll love! ✨
+                              Lisa, new arrivals you&apos;ll love! ✨
                             </motion.p>
                           </div>
                           {/* Queued Animation */}
@@ -792,7 +790,7 @@ export default function Home() {
               
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <h4 className="text-xl font-bold mb-4">What You're Losing:</h4>
+                  <h4 className="text-xl font-bold mb-4">What You&apos;re Losing:</h4>
                   <ul className="space-y-3">
                     {[
                       "Lifetime customer value",
@@ -1562,7 +1560,7 @@ export default function Home() {
             className="text-center mt-16"
           >
             <p className="text-lg text-gray-600 mb-8">
-              Still have questions? We'd love to hear from you!
+              Still have questions? We&apos;d love to hear from you!
             </p>
             <motion.button 
               whileHover={{ scale: 1.05 }}
@@ -1619,7 +1617,7 @@ export default function Home() {
                   <h3 className="text-2xl font-bold text-gray-900 mb-6">Get Early Access</h3>
                   <p className="text-gray-600 mb-8">
                     Join thousands of Shopify store owners who are already on our waitlist. 
-                    You'll be the first to know when we launch and get exclusive early access pricing.
+                    You&apos;ll be the first to know when we launch and get exclusive early access pricing.
                   </p>
                   
                   <form 

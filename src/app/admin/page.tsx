@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 interface WaitlistEntry {
   id: string;
@@ -29,7 +30,7 @@ export default function AdminPage() {
       } else {
         setError(data.error || 'Failed to fetch waitlist');
       }
-    } catch (err) {
+    } catch {
       setError('Network error');
     } finally {
       setLoading(false);
@@ -119,12 +120,12 @@ export default function AdminPage() {
           )}
 
           <div className="mt-8 text-center">
-            <a 
+            <Link 
               href="/" 
               className="text-blue-600 hover:text-blue-800 font-medium"
             >
               ← Back to Main Site
-            </a>
+            </Link>
           </div>
         </div>
       </div>

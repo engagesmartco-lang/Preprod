@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     description: "Stop losing customers! AI-powered customer retention that turns one-time buyers into repeat customers.",
   },
   alternates: {
-    canonical: "https://engagesmart.com",
+    canonical: process.env.NEXT_PUBLIC_APP_URL || "https://engagesmart.com",
   },
   category: "technology",
 };
