@@ -69,6 +69,43 @@ export default function Home() {
 
   const { email, setEmail, isLoading, isSuccess, error, submitWaitlist, reset } = useWaitlist();
 
+  // Smooth scroll function
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+    setIsMenuOpen(false); // Close mobile menu
+  };
+
+  // Close mobile menu when clicking outside or pressing Escape
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isMenuOpen && containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    if (isMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleEscape);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMenuOpen]);
+
   // const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   // const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   // const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.8]);
@@ -129,21 +166,31 @@ export default function Home() {
             {/* Desktop Menu */}
             <div className="hidden lg:flex items-center space-x-8">
               <div className="flex items-center space-x-6">
-                <a href="#features" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm">
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm"
+                >
                   Features
-                </a>
-                <a href="#how-it-works" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm">
+                </button>
+                <button 
+                  onClick={() => scrollToSection('how-it-works')}
+                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm"
+                >
                   How It Works
-                </a>
-                <a href="#waitlist" className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm">
+                </button>
+                <button 
+                  onClick={() => scrollToSection('waitlist')}
+                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm"
+                >
                   Join Waitlist
-                </a>
+                </button>
               </div>
               <div className="flex items-center space-x-4 ml-8">
                 <button className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 text-sm">
                   Log in
                 </button>
                 <motion.button 
+                  onClick={() => scrollToSection('waitlist')}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm"
@@ -157,56 +204,58 @@ export default function Home() {
             <button 
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors"
+              aria-label="Toggle mobile menu"
+              aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X className="w-6 h-6 text-gray-600" /> : <Menu className="w-6 h-6 text-gray-600" />}
             </button>
           </div>
 
           {/* Mobile Menu */}
-          {isMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden border-t border-gray-200 py-4"
-            >
-              <div className="flex flex-col space-y-4">
-                <a 
-                  href="#features" 
-                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Features
-                </a>
-                <a 
-                  href="#how-it-works" 
-                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  How It Works
-                </a>
-                <a 
-                  href="#waitlist" 
-                  className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Join Waitlist
-                </a>
-                <div className="pt-4 border-t border-gray-200">
-                  <button className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 block w-full text-left">
-                    Log in
+          <motion.div
+            initial={false}
+            animate={isMenuOpen ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="lg:hidden overflow-hidden"
+          >
+            {isMenuOpen && (
+              <div className="border-t border-gray-200 py-4">
+                <div className="flex flex-col space-y-4">
+                  <button 
+                    onClick={() => scrollToSection('features')}
+                    className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 text-left"
+                  >
+                    Features
                   </button>
-                  <motion.button 
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 w-full mt-2"
+                  <button 
+                    onClick={() => scrollToSection('how-it-works')}
+                    className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 text-left"
+                  >
+                    How It Works
+                  </button>
+                  <button 
+                    onClick={() => scrollToSection('waitlist')}
+                    className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 text-left"
                   >
                     Join Waitlist
-                  </motion.button>
+                  </button>
+                  <div className="pt-4 border-t border-gray-200">
+                    <button className="text-gray-600 hover:text-gray-900 font-medium transition-colors duration-200 py-2 block w-full text-left">
+                      Log in
+                    </button>
+                    <motion.button 
+                      onClick={() => scrollToSection('waitlist')}
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                      className="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 w-full mt-2"
+                    >
+                      Join Waitlist
+                    </motion.button>
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          )}
+            )}
+          </motion.div>
         </div>
       </motion.nav>
 
